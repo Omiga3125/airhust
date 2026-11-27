@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- ==========================================================
+       第二关 · 绕圈任务 —— 任务节点启动文件（在仿真起来之后，另开一个终端运行）
+       作用：加载 circle_config.yaml 到参数服务器 + 启动 flight_node_circle
+       启动后终端会打印参数并提示 “1 to go on , else to quit”，输入 1 回车开始
+       ========================================================== -->
+
+  <arg name="pkg" default="airhust_tutorial26_circle"/>
+  <arg name="node" default="flight_node_circle"/>
+
+  <!-- 参数整体加载到根命名空间，匹配 nh.param<T>("circle_radius", ...) -->
+  <rosparam command="load" file="$(find airhust_tutorial26_circle)/config/circle_config.yaml"/>
+
+  <node name="$(arg node)" pkg="$(arg pkg)" type="$(arg node)"
+        output="screen" respawn="false"/>
+</launch>

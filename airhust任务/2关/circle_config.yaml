@@ -1,0 +1,19 @@
+# circle_config.yaml - 绕圈任务参数（由 circle_demo.launch 加载到参数服务器）
+# 修改本文件后需重新启动节点才生效（参数在节点启动时读取一次）。
+# 这正是现场验收"改一个参数、重启、先预测再验证"的入口：
+#   改 circle_waypoints 12 -> 24：预测轨迹更圆、总耗时略增（每段更短但段数翻倍）
+#   改 circle_radius 1.5 -> 2.5：预测周长变长、总耗时增加，绕圈高度不变
+
+circle_radius: 1.5          # 单位: 米(m)。圆周半径，圆心位于起飞点正上方
+circle_waypoints: 12        # 单位: 个。一圈离散航点数 N，越小轨迹越像多边形
+circle_direction: 1         # 1 = 逆时针，-1 = 顺时针
+circle_err: 0.2             # 单位: 米(m)。航点到达容差（三轴同阈值，不含 yaw）
+circle_start_yaw: 0.0       # 单位: 弧度(rad)。绕圈全程固定的机头朝向
+circle_hover_time: 3.0      # 单位: 秒(s)。绕圈完成后悬停时长
+circle_lap_timeout: 120.0   # 单位: 秒(s)。绕圈阶段整体超时兜底
+circle_start_timeout: 30.0  # 单位: 秒(s)。飞向圆周起点阶段的超时兜底
+
+# 模板原有参数（务必注入 err_max！模板默认值是 0，会导致永远判不到"到达"，
+# 任务只能靠超时兜底推进，航点不会被逐个确认完成）
+err_max: 0.2                # 单位: 米(m)。通用到位容差
+if_debug: 1                 # 1 = 自动切 OFFBOARD，0 = 遥控器手动切
